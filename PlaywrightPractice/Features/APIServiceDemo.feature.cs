@@ -35,7 +35,7 @@ namespace Playwright.Framework.Features
         public virtual async System.Threading.Tasks.Task FeatureSetupAsync()
         {
             testRunner = global::Reqnroll.TestRunnerManager.GetTestRunnerForAssembly(null, NUnit.Framework.TestContext.CurrentContext.WorkerId);
-            global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Demo API Service", "This is a demo of simple API testing using the endpoint https://reqres.in/api wit" +
+            global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new System.Globalization.CultureInfo("en-EN"), "Features", "Demo API Service", "This is a demo of simple API testing using the endpoint https://reqres.in/api wit" +
                     "h RestSharp. \r\nYou can extend it at anytime when needed.", global::Reqnroll.ProgrammingLanguage.CSharp, featureTags);
             await testRunner.OnFeatureStartAsync(featureInfo);
         }

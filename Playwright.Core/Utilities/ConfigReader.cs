@@ -1,8 +1,8 @@
 ﻿
 using Microsoft.Extensions.Configuration;
-using Playwright.Core.DataSetting;
 using PlaywrightPractice.DataSetting;
 using PlaywrightPractice.SettingBinder;
+using Serilog;
 
 namespace PlaywrightPractice.Utilities
 {
@@ -10,18 +10,26 @@ namespace PlaywrightPractice.Utilities
     {
         public static void SetFrameworkSetting()
         {
-            // Set Base Path
+            // Set Base Path for appsettings.json
             var configurationBuilder = new ConfigurationBuilder()
            .SetBasePath(Directory.GetCurrentDirectory())
            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 
+            var logsConfiguration = new ConfigurationBuilder()
+            .AddJsonFile("logsettings.json")
+            .Build();
+
+            Serilog.Log.Logger = new Serilog.LoggerConfiguration()
+           .ReadFrom.Configuration(logsConfiguration)
+           .CreateLogger();
+
             IConfigurationRoot configurationRoot = configurationBuilder.Build();
 
 
+            // Set Data from appsettings.json
             SetHRSaleSetting(configurationRoot);
             SetAccountDataSetting(configurationRoot);
             SetServiceDemoDataSetting(configurationRoot);
-            SetDemoQASetting(configurationRoot);
         }
 
         public static void SetHRSaleSetting(IConfigurationRoot configurationRoot)
@@ -48,16 +56,6 @@ namespace PlaywrightPractice.Utilities
             if (data != null)
             {
                 ServiceDemoDataSetting.ServiceDemoDataSettings = data;
-            }
-        }
-
-        // Set Data for DemoQA Page
-        public static void SetDemoQASetting(IConfigurationRoot configurationRoot)
-        {
-            var data = configurationRoot.GetSection("DemoQASetting").Get<DemoQASettingBinders>();
-            if (data != null)
-            {
-                DemoQASetting.DemoQADataSetting = data;
             }
         }
     }

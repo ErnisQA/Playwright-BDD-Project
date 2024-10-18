@@ -1,5 +1,8 @@
 ﻿
+using Allure.Net.Commons;
 using PlaywrightPractice.SettingBinder;
+using Serilog;
+using System.Text.RegularExpressions;
 
 namespace PlaywrightPractice.Support
 {
@@ -11,10 +14,43 @@ namespace PlaywrightPractice.Support
         private static BrowserNewContextOptions options = new();
         public IPage _currentPage;
         public static IPlaywright playwright;
+        private AllureLifecycle allure = AllureLifecycle.Instance;
+        private string testcaseName;
+        private string testResultsDirectory;
+        private const string screenshotFolder = "\\Screenshot";
+        private const string logsFolder = "\\Logs";
 
         public InitHooks(ScenarioContext scenarioContext)
         {
             _scenarioContext = scenarioContext;
+            testcaseName = GetTestcaseName();
+        }
+
+        [BeforeStep]
+        public void BeforeStep()
+        {
+            var stepText = ScenarioStepContext.Current.StepInfo.Text;
+            var status = ScenarioContext.Current.ScenarioExecutionStatus.ToString();
+            Log.Information($"Executing step: {stepText}");
+        }
+
+
+        [AfterStep]
+        public void AfterStep()
+        {
+            var stepText = ScenarioStepContext.Current.StepInfo.Text;
+            var stepStatus = ScenarioStepContext.Current.Status;
+            if (_scenarioContext.TestError != null)
+            {
+                Log.Error($"Failed at: {stepText}");
+                Log.Error($"Error: {_scenarioContext.TestError.Message}");
+                Log.Error($"Step Status: {stepStatus}");
+            }
+            else
+            {
+                Log.Information($"Passed: {stepText}");
+                Log.Information($"Step Status: {stepStatus}");
+            }
         }
 
         [BeforeScenario]
@@ -25,7 +61,17 @@ namespace PlaywrightPractice.Support
 
             // Initialize Browser
             await InitializeBrowser(playwright, _context, options, _scenarioContext);
+
+            // Read TestResults directory
+            testResultsDirectory = HRSaleSetting.HRSaleDataSetting.TestResults_Path;
+
+            // Write logs
+            Log.Information($"==========================================================================");
+            var scenarioInfo = ScenarioContext.Current.ScenarioInfo.Title;
+            Log.Information($"{testcaseName} -- {scenarioInfo}");
         }
+
+
 
         [AfterScenario]
         public async Task CleanUp(HookContext context)
@@ -33,16 +79,63 @@ namespace PlaywrightPractice.Support
             _currentPage = context.Page;
 
             // Initialize Screenshot
-            var currentDirectory = HRSaleSetting.HRSaleDataSetting.TestResults_Path;
-            var screenshotName = $"screenshot" + DateTime.Now.ToFileTimeUtc();
+            var screenshotDirectory = testResultsDirectory + screenshotFolder;
+
+            // Capture Screenshot
             await _currentPage.ScreenshotAsync(new()
             {
-                Path = $"{currentDirectory}/{screenshotName}.png",
+                Path = $"{screenshotDirectory}/{testcaseName}.png",
                 FullPage = true,
             });
 
+            // Write logs:
+            var scenarioInfo = ScenarioContext.Current.ScenarioInfo.Title;
+            var scenarioStatus = ScenarioContext.Current.ScenarioExecutionStatus;
+            if (_scenarioContext.TestError != null)
+            {
+
+                Log.Error($"Scenario failed: {_scenarioContext.ScenarioInfo.Title}");
+                Log.Error($"Error: {_scenarioContext.TestError.Message}");
+                Log.Error($"Status: {scenarioStatus}");
+            }
+            else
+            {
+                Log.Information($"Scenario Passed: {_scenarioContext.ScenarioInfo.Title}");
+                Log.Information($"Status: {scenarioStatus}");
+            }
+
             // CLose Browser
             await context.Browser.CloseAsync();
+
+            // Close Logs
+            await Log.CloseAndFlushAsync();
+
+            // Add Attachment into Allure Report
+            // Add TCs log.txt into Allure Report
+            var logsDirectory = testResultsDirectory + logsFolder;
+            //AllureApi.AddAttachment(
+            //    File.ReadAllText($"{logsDirectory}/TestResults.log")
+            //);
+
+            //AllureApi.AddAttachment("TestResults.log", logsDirectory);
+
+            // Add Screenshot into Allure Report
+            AllureApi.AddAttachment(
+                $"{testcaseName}.png",
+                "image/png",
+                File.ReadAllBytes($"{screenshotDirectory}/{testcaseName}.png")
+            );
+
+        }
+
+        public string GetTestcaseName()
+        {
+            var tag = _scenarioContext.ScenarioInfo.Tags;
+            string testcasePattern = @"^TC.*";
+
+            var testcaseTags = tag.Where(tag => Regex.IsMatch(tag, testcasePattern)).FirstOrDefault();
+
+            return testcaseTags;
         }
     }
 }

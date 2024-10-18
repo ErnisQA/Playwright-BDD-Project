@@ -49,4 +49,4 @@ Scenario: Verify User Login HRSale unsuccessfully when missing informations
 	| fields   | value       |
 	| Username | Super Admin |
 	| Password |             |
-	Then Verify User login unsuccessfully with message 'The password field is required.'
+	Then Verify User login unsuccessfullyd with message 'The password field is required.'

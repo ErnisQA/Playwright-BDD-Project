@@ -35,7 +35,7 @@ namespace Playwright.Framework.Features
         public virtual async System.Threading.Tasks.Task FeatureSetupAsync()
         {
             testRunner = global::Reqnroll.TestRunnerManager.GetTestRunnerForAssembly(null, NUnit.Framework.TestContext.CurrentContext.WorkerId);
-            global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Login HR Sale", "This is Demo Playwright.\r\nUsing: POM, Dependency Injection, ConfigReader(ASP.NET " +
+            global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new System.Globalization.CultureInfo("en-EN"), "Features", "Login HR Sale", "This is Demo Playwright.\r\nUsing: POM, Dependency Injection, ConfigReader(ASP.NET " +
                     "Core)", global::Reqnroll.ProgrammingLanguage.CSharp, featureTags);
             await testRunner.OnFeatureStartAsync(featureInfo);
         }
@@ -98,17 +98,17 @@ this.ScenarioInitialize(scenarioInfo);
 #line 8
  await testRunner.GivenAsync("Navigate to \'HRSale\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-                global::Reqnroll.Table table2 = new global::Reqnroll.Table(new string[] {
+                global::Reqnroll.Table table1 = new global::Reqnroll.Table(new string[] {
                             "fields",
                             "value"});
-                table2.AddRow(new string[] {
+                table1.AddRow(new string[] {
                             "Username",
                             "Super Admin"});
-                table2.AddRow(new string[] {
+                table1.AddRow(new string[] {
                             "Password",
                             "Super Admin"});
 #line 11
- await testRunner.WhenAsync("Input with following Username and Password", ((string)(null)), table2, "When ");
+ await testRunner.WhenAsync("Input with following Username and Password", ((string)(null)), table1, "When ");
 #line hidden
 #line 15
  await testRunner.ThenAsync("Verify User login successfully with message \'Logged In Successfully.\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
@@ -116,17 +116,17 @@ this.ScenarioInitialize(scenarioInfo);
 #line 16
  await testRunner.ThenAsync("Click Logout button", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-                global::Reqnroll.Table table3 = new global::Reqnroll.Table(new string[] {
+                global::Reqnroll.Table table2 = new global::Reqnroll.Table(new string[] {
                             "fields",
                             "value"});
-                table3.AddRow(new string[] {
+                table2.AddRow(new string[] {
                             "Username",
                             "Employee"});
-                table3.AddRow(new string[] {
+                table2.AddRow(new string[] {
                             "Password",
                             "Employee"});
 #line 19
- await testRunner.WhenAsync("Input with following Username and Password", ((string)(null)), table3, "When ");
+ await testRunner.WhenAsync("Input with following Username and Password", ((string)(null)), table2, "When ");
 #line hidden
 #line 23
  await testRunner.ThenAsync("Verify User login successfully with message \'Logged In Successfully.\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
@@ -134,17 +134,17 @@ this.ScenarioInitialize(scenarioInfo);
 #line 24
  await testRunner.ThenAsync("Click Logout button", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-                global::Reqnroll.Table table4 = new global::Reqnroll.Table(new string[] {
+                global::Reqnroll.Table table3 = new global::Reqnroll.Table(new string[] {
                             "fields",
                             "value"});
-                table4.AddRow(new string[] {
+                table3.AddRow(new string[] {
                             "Username",
                             "Client"});
-                table4.AddRow(new string[] {
+                table3.AddRow(new string[] {
                             "Password",
                             "Client"});
 #line 27
- await testRunner.WhenAsync("Input with following Username and Password", ((string)(null)), table4, "When ");
+ await testRunner.WhenAsync("Input with following Username and Password", ((string)(null)), table3, "When ");
 #line hidden
 #line 31
  await testRunner.ThenAsync("Verify User login successfully with message \'Logged In Successfully.\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
@@ -180,17 +180,17 @@ this.ScenarioInitialize(scenarioInfo);
 #line 37
  await testRunner.GivenAsync("Navigate to \'HRSale\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-                global::Reqnroll.Table table5 = new global::Reqnroll.Table(new string[] {
+                global::Reqnroll.Table table4 = new global::Reqnroll.Table(new string[] {
                             "fields",
                             "value"});
-                table5.AddRow(new string[] {
+                table4.AddRow(new string[] {
                             "Username",
                             ""});
-                table5.AddRow(new string[] {
+                table4.AddRow(new string[] {
                             "Password",
                             "Super Admin"});
 #line 40
- await testRunner.WhenAsync("Input with following Username and Password", ((string)(null)), table5, "When ");
+ await testRunner.WhenAsync("Input with following Username and Password", ((string)(null)), table4, "When ");
 #line hidden
 #line 44
  await testRunner.ThenAsync("Verify User login unsuccessfully with message \'The username field is required.\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
@@ -198,17 +198,17 @@ this.ScenarioInitialize(scenarioInfo);
 #line 47
  await testRunner.GivenAsync("Navigate to \'HRSale\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-                global::Reqnroll.Table table6 = new global::Reqnroll.Table(new string[] {
+                global::Reqnroll.Table table5 = new global::Reqnroll.Table(new string[] {
                             "fields",
                             "value"});
-                table6.AddRow(new string[] {
+                table5.AddRow(new string[] {
                             "Username",
                             "Super Admin"});
-                table6.AddRow(new string[] {
+                table5.AddRow(new string[] {
                             "Password",
                             ""});
 #line 48
- await testRunner.WhenAsync("Input with following Username and Password", ((string)(null)), table6, "When ");
+ await testRunner.WhenAsync("Input with following Username and Password", ((string)(null)), table5, "When ");
 #line hidden
 #line 52
  await testRunner.ThenAsync("Verify User login unsuccessfully with message \'The password field is required.\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");

@@ -1,5 +1,4 @@
 using FluentAssertions;
-using Playwright.Core.DataSetting;
 using PlaywrightPractice.DataSetting;
 using PlaywrightPractice.SettingBinder;
 
@@ -30,10 +29,7 @@ namespace PlaywrightPractice.StepDefinitions
             {
                 homePage = HRSaleSetting.HRSaleDataSetting.HomepageUrl;
             }
-            else if (homePage.Equals("demoqa", StringComparison.OrdinalIgnoreCase))
-            {
-                homePage = DemoQASetting.DemoQADataSetting.HomepageUrl;
-            }
+            // Add more Homepage here
             else
             {
                 throw new Exception("Your Homepage is not found, please check again");
