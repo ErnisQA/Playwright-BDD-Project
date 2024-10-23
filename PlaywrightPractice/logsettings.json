@@ -13,7 +13,7 @@
       {
         "Name": "File",
         "Args": {
-          "path": "D:\\Playwright\\PlaywrightPractice\\TestResults\\Logs\\TestResults.log",
+          "path": ".\\TestResults\\Logs\\TestResults.log",
           "rollingInterval": "Infinite",
           "outputTemplate": "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level:u3}] {Message:lj}{NewLine}{Exception}"
         }

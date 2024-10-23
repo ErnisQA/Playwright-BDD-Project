@@ -110,15 +110,6 @@ namespace PlaywrightPractice.Support
             // Close Logs
             await Log.CloseAndFlushAsync();
 
-            // Add Attachment into Allure Report
-            // Add TCs log.txt into Allure Report
-            var logsDirectory = testResultsDirectory + logsFolder;
-            //AllureApi.AddAttachment(
-            //    File.ReadAllText($"{logsDirectory}/TestResults.log")
-            //);
-
-            //AllureApi.AddAttachment("TestResults.log", logsDirectory);
-
             // Add Screenshot into Allure Report
             AllureApi.AddAttachment(
                 $"{testcaseName}.png",
